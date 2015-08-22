@@ -71,14 +71,32 @@ if (new File(projectDir, '.git').exists()) {
     gitHash = repo.log().find().abbreviatedId
 }
 
-//minecraft {
-//    srgExtra "PK:org/pircbotx"
-//}
-
 configurations {
     shade
     compile.extendsFrom shade
 }
+
+dependencies {
+    shade 'org.pircbotx:pircbotx:2.0.1'
+}
+
+dependencies {
+    if (project.getProperty("bambooshortPlanName") == "BBM-Dev"){
+    compile "dev.builtbroken.voltzengine:VoltzEngine:1.7.10-0.+:deobf-dev"
+    }
+    else
+    {
+    compile "com.builtbroken.voltzengine:VoltzEngine:1.7.10-0.+:deobf"}
+    shade 'org.pircbotx:pircbotx:2.0.1'
+}
+
+//minecraft {
+//    srgExtra "PK:org/pircbotx"
+//}
+
+//minecraft {
+//    srgExtra "PK:org/pircbotx"
+//}
 
 jar {
     configurations.shade.each { dep ->
@@ -92,23 +110,10 @@ jar {
             "Implementation-Title": archivesBaseName,
             "Implementation-Version": project.version,
             "Git-Hash": gitHash,
-            "FMLAT": "VE_at.cfg"
     )
 }
 
-dependencies {
-    if (project.getProperty("bambooshortPlanName") == "BBM-Dev"){
-    compile "dev.builtbroken.voltzengine:VoltzEngine:1.7.10-0.+:deobf-dev"
-    }
-    else
-    {
-    compile "com.builtbroken.voltzengine:VoltzEngine:1.7.10-0.+:deobf"}
-    shade 'org.pircbotx:pircbotx:2.0.1'
-}
 
-minecraft {
-    srgExtra "PK:org/pircbotx"
-}
 
 jacocoTestReport {
     reports {
